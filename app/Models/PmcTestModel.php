@@ -24,8 +24,7 @@ class PmcTestModel
         );
        
         $res = DB::select("CALL sp_records_det(?,?)", $parametros);
-        var_dump($parametros);
-        exit();
+       
         return $res[0] ?? null;
     }
     public static function ToListRecordsCab(): array
