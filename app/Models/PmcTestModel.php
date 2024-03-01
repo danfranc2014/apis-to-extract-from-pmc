@@ -12,18 +12,19 @@ class PmcTestModel
         $parametros = array(
             $data['recordscab']
         );
-        var_dump($parametros);
-        exit();
-        $res = DB::select("CALL sp_records_cab(?)", $parametros);
+       
+        $res = DB::select("CALL sp_records_cab(?)", $parametros);       
         return $res[0] ?? null;
     }
     public static function ToRegisterUpdateDet(array $data): Object
-    {
+    {       
         $parametros = array(
+            $data['recordid'],
             $data['recordsdet']
         );
-        $res = DB::select("CALL sp_records_dets(?)", $parametros);
-        var_dump($res);
+       
+        $res = DB::select("CALL sp_records_det(?,?)", $parametros);
+        var_dump($parametros);
         exit();
         return $res[0] ?? null;
     }

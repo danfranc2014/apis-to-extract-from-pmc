@@ -98,8 +98,6 @@ class PmcTestLogic
         }
 
         $data['recordscab'] = General::convertir_array_a_xml($newrecords);
-        // print_r($data['recordscab']);
-        // exit();
 
         $response = PmcTestModel::ToRegisterUpdateCab($data);
 
@@ -125,9 +123,12 @@ class PmcTestLogic
         $password = 'FjWJNxn8TbKz2Mz4aRFQvnf8ApPLug72';
         $xtoken = "e7b67353f15d8b3e86290b0c717d63bd335fcf7f";
 
+        $message = 'No se recibio respuesta de la Base Datos';
+        $success = TRUE;
+
         $response_records_cab = PmcTestModel::ToListRecordsCab();
         $recordid = 0;
-   
+
         foreach ($response_records_cab as $records_cab) {
             $recordid = $records_cab->recordid;
 
@@ -163,17 +164,61 @@ class PmcTestLogic
             $result = json_decode($response, true);
 
             $newrecords = array();
-            $newrecords[] = array(
-                'recordid' => $recordid,
-                'data' => $result['result']['data'],
+            $newrecords[] = array(                
+                'case_id' =>  $result['result']['data']['case_id'],
+                'provider' =>  $result['result']['data']['provider'],
+                'insured' =>  $result['result']['data']['insured'],
+                'type_of_claim' =>  $result['result']['data']['type_of_claim'],
+                'case_number' =>  $result['result']['data']['case_number'],
+                'first_notice_of_loss' =>  $result['result']['data']['first_notice_of_loss'],
+                'types_of_services' =>  $result['result']['data']['types_of_services'],
+                'total_bill_amount' =>  $result['result']['data']['total_bill_amount'],
+                'total_collections' =>  $result['result']['data']['total_collections'],
+                'total_balance' =>  $result['result']['data']['total_balance'],
+                'voluntary_payment_date' =>  $result['result']['data']['voluntary_payment_date'],
+                'policy_number' =>  $result['result']['data']['policy_number'],
+                'insurance_company' =>  $result['result']['data']['insurance_company'],
+                /*'10_day_demand_sent' =>  $result['result']['data']['10_day_demand_sent'],
+                'case_filed' =>  $result['result']['data']['case_filed'],
+                'corporate_representative' =>  $result['result']['data']['corporate_representative'],
+                'engineer' =>  $result['result']['data']['engineer'],
+                'insurance_expert' =>  $result['result']['data']['insurance_expert'],
+                'pricing_expert' =>  $result['result']['data']['pricing_expert'],
+                'indoor_environmental_professio' =>  $result['result']['data']['indoor_environmental_professio'],
+                'inspector' =>  $result['result']['data']['inspector'],
+                'ps_corporate_rep' =>  $result['result']['data']['ps_corporate_rep']*/
             );
 
+
+            /*$newrecords['insured'] =  $result['result']['data']['insured'];
+            $newrecords['type_of_claim'] =  $result['result']['data']['type_of_claim'];
+            $newrecords['case_number'] =  $result['result']['data']['case_number'];
+            $newrecords['date_of_loss'] =  $result['result']['data']['date_of_loss'];
+            $newrecords['date_of_service'] =  $result['result']['data']['date_of_service'];
+            $newrecords['claim_number'] =  $result['result']['data']['claim_number'];
+            $newrecords['first_notice_of_loss'] =  $result['result']['data']['first_notice_of_loss'];
+            $newrecords['types_of_services'] =  $result['result']['data']['types_of_services'];
+            $newrecords['total_bill_amount'] =  $result['result']['data']['total_bill_amount'];
+            $newrecords['total_collections'] =  $result['result']['data']['total_collections'];
+            $newrecords['total_balance'] =  $result['result']['data']['total_balance'];
+            $newrecords['voluntary_payment_date'] =  $result['result']['data']['voluntary_payment_date'];
+            $newrecords['policy_number'] =  $result['result']['data']['policy_number'];
+            $newrecords['insurance_company'] =  $result['result']['data']['insurance_company'];
+            $newrecords['10_day_demand_sent'] =  $result['result']['data']['10_day_demand_sent'];
+            $newrecords['case_filed'] =  $result['result']['data']['case_filed'];
+            $newrecords['corporate_representative'] =  $result['result']['data']['corporate_representative'];
+            $newrecords['engineer'] =  $result['result']['data']['engineer'];
+            $newrecords['insurance_expert'] =  $result['result']['data']['insurance_expert'];
+            $newrecords['pricing_expert'] =  $result['result']['data']['pricing_expert'];
+            $newrecords['indoor_environmental_professio'] =  $result['result']['data']['indoor_environmental_professio'];
+            $newrecords['inspector'] =  $result['result']['data']['inspector'];
+            $newrecords['ps_corporate_rep'] =  $result['result']['data']['ps_corporate_rep'];    */
+
+            $data = array();
+            $data['recordid'] = $recordid;
             $data['recordsdet'] = General::convertir_array_a_xml($newrecords);
 
             $response = PmcTestModel::ToRegisterUpdateDet($data);
-
-            $message = 'No se recibio respuesta de la Base Datos';
-            $success = TRUE;
 
             if (!General::isEmpty($response)) {
                 $message = $response->message;
@@ -184,9 +229,8 @@ class PmcTestLogic
                     $response = null;
                 }
             }
-
-            return [$response, $message, $success];
         }
+        //return [$response, $message, $success];
     }
 
     public static function ProbandoTabla()

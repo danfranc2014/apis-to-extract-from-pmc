@@ -37,13 +37,17 @@ class PmcTestController extends Controller
     public function GetCaseWithRecordId(Request $request)
     {
         $response = new ApiResponse();
-        try {
-            $response = PmcTestLogic::GetCaseWithRecordId();
-            $error = $response[2];
-            $message = $response[1];
-        } catch (\Exception $e) {
-            return ApiResponse::error('Error' . $e, 404, $response);
-        }
+
+        $response = PmcTestLogic::GetCaseWithRecordId();
+        $error = $response[2];
+        $message = $response[1];
+        // try {
+        //     $response = PmcTestLogic::GetCaseWithRecordId();
+        //     $error = $response[2];
+        //     $message = $response[1];
+        // } catch (\Exception $e) {
+        //     return ApiResponse::error('Error' . $e, 404, $response);
+        // }
         return ApiResponse::success($message, 200, $response, $error);       
     }
 
